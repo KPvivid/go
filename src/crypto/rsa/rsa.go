@@ -259,7 +259,8 @@ func (priv *PrivateKey) Validate() error {
 }
 
 // GenerateKey generates an RSA keypair of the given bit size using the
-// random source random (for example, crypto/rand.Reader).
+// 
+source random (for example, crypto/rand.Reader).
 func GenerateKey(random io.Reader, bits int) (*PrivateKey, error) {
 	return GenerateMultiPrimeKey(random, 2, bits)
 }
@@ -284,7 +285,6 @@ func GenerateKey(random io.Reader, bits int) (*PrivateKey, error) {
 //
 // [On the Security of Multi-prime RSA]: http://www.cacr.math.uwaterloo.ca/techreports/2006/cacr2006-16.pdf
 func GenerateMultiPrimeKey(random io.Reader, nprimes int, bits int) (*PrivateKey, error) {
-	randutil.MaybeReadByte(random)
 
 	if boring.Enabled && random == boring.RandReader && nprimes == 2 && (bits == 2048 || bits == 3072) {
 		bN, bE, bD, bP, bQ, bDp, bDq, bQinv, err := boring.GenerateKeyRSA(bits)
